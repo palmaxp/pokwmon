@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
 import ListPokemons from '../modules/ListPokemons';
 
 const Home = () => {
 	return (
-		<div>
-			<ListPokemons />
-		</div>
+		<>
+			<Link to={`/selecionar`}>Selecionar pokemon</Link>
+		</>
 	);
 };
 

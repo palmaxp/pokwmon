@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Col, Container, Row } from 'reactstrap';
 
 const ListPokemons = () => {
 	const [pokemons, setPokemons] = useState([]);
@@ -45,20 +46,24 @@ const ListPokemons = () => {
 	return (
 		<>
 			{!fetching && (
-				<div>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
+				<Container>
+					<Row>
 						{pokemons.map((pokemon, i) => (
-							<div mr={2} key={i}>
+							<Col key={i} style={{ alignItems: 'center' }}>
 								{console.log(pokemon)}
 								<img
 									src={pokemon.sprites.front_default}
-									style={{ width: 200 }}
+									style={{
+										display: 'inline-block',
+										width: '100%',
+										minWidth: '350px',
+									}}
 								/>
-								<div>{pokemon.name}</div>
-							</div>
+								<div style={{ textAlign: 'center' }}>{pokemon.name}</div>
+							</Col>
 						))}
-					</div>
-				</div>
+					</Row>
+				</Container>
 			)}
 		</>
 	);
