@@ -4,7 +4,7 @@ const ListPokemons = () => {
 	const [pokemons, setPokemons] = useState([]);
 	const [numberChosen, setNumberChosen] = useState([3, 4, 5]);
 	const [fetching, setFetching] = useState(true);
-	const quantidadePokemonsLista = 10;
+	const quantidadePokemonsLista = 3;
 	const min = 1;
 	const max = 905;
 	const ref = useRef(0);
@@ -46,15 +46,18 @@ const ListPokemons = () => {
 		<>
 			{!fetching && (
 				<div>
-					ListPokemons
-					{pokemons.map((pokemon, i) => (
-						<div mr={2} key={i}>
-							<div style={{ display: 'flex' }}>
-								<img src={pokemon.sprites.front_default} />
-								<img src={pokemon.sprites.back_default} />
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
+						{pokemons.map((pokemon, i) => (
+							<div mr={2} key={i}>
+								{console.log(pokemon)}
+								<img
+									src={pokemon.sprites.front_default}
+									style={{ width: 200 }}
+								/>
+								<div>{pokemon.name}</div>
 							</div>
-						</div>
-					))}
+						))}
+					</div>
 				</div>
 			)}
 		</>
