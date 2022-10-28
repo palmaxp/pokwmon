@@ -2,28 +2,37 @@ import React, { useEffect, useState, useRef } from 'react';
 
 const ListPokemons = () => {
 	const [pokemons, setPokemons] = useState([]);
+	const [numberChosen, setNumberChosen] = useState([3, 4, 5]);
 	const [fetching, setFetching] = useState(true);
-	let quantidadePokemonsLista = 1;
-	let min = 1;
-	let max = 905;
-
+	const quantidadePokemonsLista = 10;
+	const min = 1;
+	const max = 905;
 	const ref = useRef(0);
 
-	const getRandomNumber = (min, max) => {
-		return Math.round(Math.random() * (max - min) + min);
+	const getRandomNumberNotChosenBefore = (min, max) => {
+		let invalid = true;
+		let randomNum;
+		while (invalid) {
+			randomNum = Math.round(Math.random() * (max - min) + min);
+			if (!numberChosen.includes(randomNum)) {
+				setNumberChosen((prevList) => [...prevList, randomNum]);
+				invalid = false;
+			}
+		}
+		return randomNum;
 	};
 
 	const getPokemonsList = () => {
 		for (let index = 0; index < quantidadePokemonsLista; index++) {
-			const pokemonId = getRandomNumber(min, max);
+			const pokemonId = getRandomNumberNotChosenBefore(min, max);
 			fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
 				.then((r) => r.json())
 				.then((pokemon) => {
 					setPokemons((prevList) => [...prevList, pokemon]);
 				})
-				.catch((err) => console.error(err))
-				.finally(() => setFetching(false));
+				.catch((err) => console.error(err));
 		}
+		setFetching(false);
 	};
 
 	useEffect(() => {
@@ -38,10 +47,12 @@ const ListPokemons = () => {
 			{!fetching && (
 				<div>
 					ListPokemons
-					{pokemons.map((pokemon) => (
-						<div mr={2}>
-							{pokemon.name}
-							{console.log(pokemon)}
+					{pokemons.map((pokemon, i) => (
+						<div mr={2} key={i}>
+							<div style={{ display: 'flex' }}>
+								<img src={pokemon.sprites.front_default} />
+								<img src={pokemon.sprites.back_default} />
+							</div>
 						</div>
 					))}
 				</div>
