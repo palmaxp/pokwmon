@@ -1,7 +1,12 @@
-import React from 'react';
+import ListPokemons from '../modules/ListPokemons';
 
 const Home = () => {
-	return <div>Home</div>;
+	return (
+		<div>
+			Home
+			<ListPokemons />
+		</div>
+	);
 };
 
 export default Home;
